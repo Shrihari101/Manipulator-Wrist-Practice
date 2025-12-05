@@ -1,4 +1,4 @@
-package frc.robot.Subsystems.manipulator;
+package frc.robot.Subsystems.manipulator.wrist;
 
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
@@ -6,6 +6,7 @@ import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.SlotConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.ConnectedMotorValue;
 import com.ctre.phoenix6.signals.InvertedValue;
@@ -25,8 +26,6 @@ import frc.robot.Constants.Ports;
 
 public class WristIOKraken implements WristIO {
     
-            private static final double minAngleAmount = 0;
-            private static final double maxAngleAmount = 0;
             private TalonFX m_motor;
             private DutyCycleEncoder m_absoluteEncoder;
             private final TalonFXConfiguration m_config;
@@ -40,6 +39,7 @@ public class WristIOKraken implements WristIO {
             private StatusSignal<ConnectedMotorValue> m_connected;
         
             private boolean m_relativeEncoderReset = false;
+            private PositionVoltage m_positionControl = new PositionVoltage(0.0).withSlot(0);
             private Rotation2d m_desiredAngle = new Rotation2d();
         
             public WristIOKraken(int port, int absoluteEncoderPort) {
@@ -116,9 +116,10 @@ public class WristIOKraken implements WristIO {
             @Override
             public void setDesiredAngle(Rotation2d angle) {
                 double angleAmount = angle.getDegrees();
-                angleAmount = MathUtil.clamp(angleAmount, minAngleAmount, maxAngleAmount);
+                angleAmount = MathUtil.clamp(angleAmount, ManipulatorWristConstants.minAngleAmount, ManipulatorWristConstants.maxAngleAmount);
         angle = Rotation2d.fromDegrees(angleAmount);
         m_desiredAngle = angle;
+        m_motor.setControl(m_positionControl.withPosition(angle.getRotations()));
     }
 
     private Rotation2d getCurrentAngle() {

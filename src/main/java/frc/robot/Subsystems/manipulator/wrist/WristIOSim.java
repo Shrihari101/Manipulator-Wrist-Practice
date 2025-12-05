@@ -1,8 +1,10 @@
-package frc.robot.Subsystems.manipulator;
+package frc.robot.Subsystems.manipulator.wrist;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.SingleJointedArmSim;
+import frc.robot.Constants.ManipulatorWristConstants;
 
 public class WristIOSim implements WristIO {
     private PIDController m_controller = new PIDController(0, 0, 0);
@@ -15,6 +17,17 @@ public class WristIOSim implements WristIO {
     private boolean atSetpoint() {
         return m_controller.atSetpoint();
     }
+
+    public WristIOSim() {
+        m_sim = 
+        new SingleJointedArmSim(
+            LinearSystemId.createSingleJointedArmSystem(
+                ManipulatorWristConstants.kWristSimGearbox,
+                ManipulatorWristConstants.kWristSimGearing, 0),
+            ManipulatorWristConstants.kWristArmLength, 0, 0, 0, 130, false, 0, null);
+    m_controller.setTolerance(ManipulatorWristConstants.kWristTolerance);
+    }
+
     
     @Override
     public void setDesiredAngle(Rotation2d angle) {
@@ -37,5 +50,4 @@ public class WristIOSim implements WristIO {
     public void setPIDFF(int slot, double kP, double kI, double kD, double kS) {
         m_controller.setPID(kP, kI, kD);
     }
-    
 }

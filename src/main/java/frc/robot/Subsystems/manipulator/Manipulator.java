@@ -4,14 +4,23 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ManipulatorWristConstants;
+import frc.robot.Subsystems.manipulator.wrist.WristIO;
 
 public class Manipulator extends SubsystemBase {
     private WristIO m_io;
     private Rotation2d m_desiredAngle = new Rotation2d();
     
-    public Manipulator (WristIO wristIO) {
-        m_io = wristIO;
+    public static enum ManipulatorState {
+      kStow,
+      kIntaking,
+      kIndexing,
+      kScoring,
+      kAlgaeDescoring,
+      kAlgaeHold,
+      kAlgaeOuttake,
+      kCoralEject,
     }
+
 
 @Override
 public void periodic() {

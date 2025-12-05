@@ -1,4 +1,4 @@
-package frc.robot.Subsystems.manipulator;
+package frc.robot.Subsystems.manipulator.wrist;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 
