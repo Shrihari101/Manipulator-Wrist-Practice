@@ -5,11 +5,11 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ManipulatorWristConstants;
 
-public class Wrist extends SubsystemBase {
+public class Manipulator extends SubsystemBase {
     private WristIO m_io;
     private Rotation2d m_desiredAngle = new Rotation2d();
     
-    public Wrist (WristIO wristIO) {
+    public Manipulator (WristIO wristIO) {
         m_io = wristIO;
     }
 
