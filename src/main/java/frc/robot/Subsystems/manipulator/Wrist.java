@@ -3,7 +3,7 @@ package frc.robot.Subsystems.manipulator;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.ManipulatorConstants;
+import frc.robot.Constants.ManipulatorWristConstants;
 
 public class Wrist extends SubsystemBase {
     private WristIO m_io;
@@ -18,17 +18,17 @@ public void periodic() {
   if(RobotBase.isReal()) {
     m_io.setPIDFF(
       0,
-      ManipulatorConstants.kP.get(),
-      ManipulatorConstants.kI.get(),
-      ManipulatorConstants.kD.get(),
-      ManipulatorConstants.kS.get());
+      ManipulatorWristConstants.kP.get(),
+      ManipulatorWristConstants.kI.get(),
+      ManipulatorWristConstants.kD.get(),
+      ManipulatorWristConstants.kS.get());
 } else {
   m_io.setPIDFF(
       0,
-      ManipulatorConstants.kSimP.get(),
-      ManipulatorConstants.kSimI.get(),
-      ManipulatorConstants.kSimD.get(),
-      ManipulatorConstants.kSimkS.get());
+      ManipulatorWristConstants.kSimP.get(),
+      ManipulatorWristConstants.kSimI.get(),
+      ManipulatorWristConstants.kSimD.get(),
+      ManipulatorWristConstants.kSimkS.get());
 }
 }
 

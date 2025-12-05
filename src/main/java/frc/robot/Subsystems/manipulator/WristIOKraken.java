@@ -20,7 +20,7 @@ import edu.wpi.first.units.measure.Temperature;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.robot.Constants.CurrentLimitConstants;
-import frc.robot.Constants.ManipulatorConstants;
+import frc.robot.Constants.ManipulatorWristConstants;
 import frc.robot.Constants.Ports;
 
 public class WristIOKraken implements WristIO {
@@ -59,7 +59,7 @@ public class WristIOKraken implements WristIO {
                     .withInverted(InvertedValue.Clockwise_Positive);
         
             var feedback =
-                new FeedbackConfigs().withSensorToMechanismRatio(ManipulatorConstants.kWristGearRatio);
+                new FeedbackConfigs().withSensorToMechanismRatio(ManipulatorWristConstants.kWristGearRatio);
         
             m_config =
                 new TalonFXConfiguration()
@@ -131,16 +131,12 @@ public class WristIOKraken implements WristIO {
 
     public void resetRelativeEncoder() {
         double raw = m_absoluteEncoder.get();
-        raw += ManipulatorConstants.kWristOffset.getRotations();
+        raw += ManipulatorWristConstants.kWristOffset.getRotations();
         raw %= 1;
-        if(raw < 0) {
-            raw += 1;
-        }
-        double rotations = 
-            Rotation2d.fromRotations(raw)
-            .div(ManipulatorConstants.kWristAbsoluteEncoderGearRatio)
-            .plus(Rotation2d.fromDegrees(23))
-            .getRotations();
-        m_motor.setPosition(rotations);
+        Rotation2d rotations = 
+            Rotation2d.fromRotations(raw).div(ManipulatorWristConstants.kWristAbsoluteEncoderGearRatio);
+            Rotation2d.fromRotations(raw).plus(Rotation2d.fromDegrees(23));
+            Rotation2d.fromRotations(raw).getRotations();
+        m_motor.setPosition(rotations.getRotations());
     }
 }

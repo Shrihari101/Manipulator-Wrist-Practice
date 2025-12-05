@@ -6,15 +6,13 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.robot.util.LoggedTunableNumber;
 
 public class Constants {
-    public class ManipulatorConstants {
+    public class ManipulatorWristConstants {
         public static final double kWristGearRatio = 0;
-        public static final double something = 1;
         public static final int minAngleAmount = 0;
         public static final int maxAngleAmount = 140;
 
         public static final double kWristAbsoluteEncoderGearRatio = 32.0 / 14.0;
-        public static final Rotation2d kWristOffset = 
-            Rotation2d.fromDegrees((-37.4)* kWristAbsoluteEncoderGearRatio);
+        public static final Rotation2d kWristOffset = Rotation2d.fromDegrees((-37.4)* kWristAbsoluteEncoderGearRatio);
 
         public static final LoggedTunableNumber kP = new LoggedTunableNumber("P");
         public static final LoggedTunableNumber kI = new LoggedTunableNumber("I");
@@ -38,5 +36,5 @@ public class Constants {
 
     }
 
-    public static final boolean kTuningMode = false;//for loggedTunableNumber file to work
+    public static final boolean kTuningMode = false; //for loggedTunableNumber file to work
 }
