@@ -162,8 +162,4 @@ public class Manipulator extends SubsystemBase {
   public Angle getRollerPosition() {
     return Degrees.of(m_rollerInputs.currentAngle);
   }
-
-  public double getRollerError() {
-    return m_rollerInputs.desiredAngle - m_rollerInputs.currentAngle;
-  }
 }
