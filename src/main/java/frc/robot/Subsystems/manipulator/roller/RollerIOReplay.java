@@ -1,6 +1,4 @@
-package frc.robot.Subsystems.roller;
-
-import edu.wpi.first.units.measure.Angle;
+package frc.robot.Subsystems.manipulator.roller;
 
 public class RollerIOReplay implements RollerIO {
 
@@ -8,13 +6,7 @@ public class RollerIOReplay implements RollerIO {
   public void updateInputs(RollerInputsAutoLogged rollerInputs) {}
 
   @Override
-  public void setDesiredAngle(Angle position) {}
-
-  @Override
   public void setVoltage(double voltage) {}
-
-  @Override
-  public void setPID(double kP, double kI, double kD, double kS) {}
 
   @Override
   public void setCurrentLimits(double currentLimits) {}

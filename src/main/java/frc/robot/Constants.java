@@ -13,16 +13,9 @@ public class Constants {
     public static final double kRollerSimMOI = 1;
     public static final double kRollerSimGearing = 10;
     public static final double kRollerPositionTolerance = 2;
-
-    public static final LoggedTunableNumber rollerkP = new LoggedTunableNumber("P", 0.0);
-    public static final LoggedTunableNumber rollerkI = new LoggedTunableNumber("I", 0.0);
-    public static final LoggedTunableNumber rollerkD = new LoggedTunableNumber("D", 0.0);
-    public static final LoggedTunableNumber rollerkS = new LoggedTunableNumber("kS", 0.0);
-
-    public static final LoggedTunableNumber rollerkSimP = new LoggedTunableNumber("SimP", 0.0);
-    public static final LoggedTunableNumber rollerkSimI = new LoggedTunableNumber("SimI", 0.0);
-    public static final LoggedTunableNumber rollerkSimD = new LoggedTunableNumber("SimD", 0.0);
-    public static final LoggedTunableNumber rollerkSimkS = new LoggedTunableNumber("SimkS", 0.0);
+    public static final boolean kTuningMode = false;
+    public static final LoggedTunableNumber kTuningVoltage =
+        new LoggedTunableNumber("Roller Tuning Voltage", 0.0);
     public static final LoggedTunableNumber kRollerStowVoltage =
         new LoggedTunableNumber("Manipulator Roller Stow Voltage", 4.0);
     public static final LoggedTunableNumber kRollerIntakingVoltage =
@@ -30,8 +23,8 @@ public class Constants {
   }
 
   public class ManipulatorWristConstants {
-    public static final double minAngle = 0;
-    public static final double maxAngle = 135;
+    public static final double kMinAngleDeg = 0;
+    public static final double kMaxAngleDeg = 135;
 
     public static final double kWristAbsoluteEncoderGearRatio = 32.0 / 14.0;
     public static final Rotation2d kWristOffset =

@@ -134,7 +134,9 @@ public class WristIOKraken implements WristIO {
     double angleAmount = angle.getDegrees();
     angleAmount =
         MathUtil.clamp(
-            angleAmount, ManipulatorWristConstants.minAngle, ManipulatorWristConstants.maxAngle);
+            angleAmount,
+            ManipulatorWristConstants.kMinAngleDeg,
+            ManipulatorWristConstants.kMaxAngleDeg);
     angle = Rotation2d.fromDegrees(angleAmount);
     m_desiredAngle = angle;
     m_motor.setControl(m_positionControl.withPosition(angle.getRotations()));

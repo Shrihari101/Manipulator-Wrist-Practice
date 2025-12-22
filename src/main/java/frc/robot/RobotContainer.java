@@ -7,10 +7,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller;
 import frc.robot.Constants.Ports;
 import frc.robot.Subsystems.manipulator.Manipulator;
 import frc.robot.Subsystems.manipulator.Manipulator.ManipulatorState;
+import frc.robot.Subsystems.manipulator.roller.RollerIOKraken;
+import frc.robot.Subsystems.manipulator.roller.RollerIOSim;
 import frc.robot.Subsystems.manipulator.wrist.WristIOKraken;
 import frc.robot.Subsystems.manipulator.wrist.WristIOSim;
-import frc.robot.Subsystems.roller.RollerIOKraken;
-import frc.robot.Subsystems.roller.RollerIOSim;
 
 public class RobotContainer {
   private Manipulator m_manipulator;

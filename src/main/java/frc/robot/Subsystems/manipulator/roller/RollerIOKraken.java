@@ -1,8 +1,7 @@
-package frc.robot.Subsystems.roller;
+package frc.robot.Subsystems.manipulator.roller;
 
 import static edu.wpi.first.units.Units.Amps;
 import static edu.wpi.first.units.Units.Celsius;
-import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecondPerSecond;
 import static edu.wpi.first.units.Units.Volts;
@@ -13,12 +12,10 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.ConnectedMotorValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularAcceleration;
 import edu.wpi.first.units.measure.AngularVelocity;
@@ -44,12 +41,7 @@ public class RollerIOKraken implements RollerIO {
   private StatusSignal<ConnectedMotorValue> m_connected;
   private StatusSignal<AngularAcceleration> m_motorAcceleration;
 
-  private Angle m_desiredAngle = Degrees.of(0.0);
-  private boolean m_positionControl = false;
-
   private final VoltageOut m_voltageOut = new VoltageOut(0.0).withEnableFOC(true);
-  private final PositionVoltage m_positionVoltage =
-      new PositionVoltage(0.0).withSlot(0).withEnableFOC(true);
 
   public RollerIOKraken(int port) {
     m_motor = new TalonFX(port, Ports.kMainCanivoreName);
@@ -110,8 +102,6 @@ public class RollerIOKraken implements RollerIO {
           m_motorTemperature);
     }
     rollerInputs.motorIsConnected = m_connected.getValue() != ConnectedMotorValue.Unknown;
-    rollerInputs.currentAngle = m_motorAngle.getValue().in(Degrees);
-    rollerInputs.desiredAngle = m_desiredAngle.in(Degrees);
     rollerInputs.velocity = m_motorVelocity.getValue().in(RotationsPerSecond);
     rollerInputs.acceleration = m_motorAcceleration.getValue().in(RotationsPerSecondPerSecond);
     rollerInputs.temperature = m_motorTemperature.getValue().in(Celsius);
@@ -123,27 +113,6 @@ public class RollerIOKraken implements RollerIO {
   @Override
   public void setVoltage(double voltage) {
     m_motor.setControl(m_voltageOut.withOutput(voltage));
-    m_positionControl = false;
-    m_desiredAngle = Degrees.of(0.0);
-  }
-
-  @Override
-  public void setDesiredAngle(Angle position) {
-    m_motor.setControl(m_positionVoltage.withPosition(position));
-    m_positionControl = true;
-    m_desiredAngle = position;
-  }
-
-  @Override
-  public void setPID(double kP, double kI, double kD, double kS) {
-    m_motor
-        .getConfigurator()
-        .apply(
-            m_config.Slot0.withKP(kP)
-                .withKI(kI)
-                .withKD(kD)
-                .withStaticFeedforwardSign(StaticFeedforwardSignValue.UseClosedLoopSign),
-            0.0);
   }
 
   @Override
