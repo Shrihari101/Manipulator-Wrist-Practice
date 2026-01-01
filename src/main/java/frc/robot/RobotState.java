@@ -18,6 +18,7 @@ public class RobotState {
     kStop,
     kIndexing,
     kIntaking,
+    //add more elevator states here when done
   }
 
   private SubsystemProfiles<RobotAction> m_profiles;
