@@ -112,4 +112,13 @@ public class Manipulator extends SubsystemBase {
   public Rotation2d getDesiredWristAngle() {
     return m_desiredAngle;
   }
+
+  public Rotation2d getCurrentAngle() {
+    return Rotation2d.fromDegrees(m_wristInputs.currentAngleDeg);
+  }
+
+  public boolean atSetpoint() {
+    return Math.abs(m_wristInputs.desiredAngleDeg - getCurrentAngle().getDegrees())
+        < ManipulatorWristConstants.kWristTolerance;
+  }
 }

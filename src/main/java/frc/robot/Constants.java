@@ -7,6 +7,22 @@ import frc.robot.util.LoggedTunableNumber;
 
 public class Constants {
 
+  public class IndexerConstants {
+    public static final LoggedTunableNumber kStopVoltage =
+        new LoggedTunableNumber("Indexer Stop Voltage", 0.0);
+    public static final LoggedTunableNumber kIndexingVoltage =
+        new LoggedTunableNumber("Indexer Indexing Voltage", 2.0);
+    public static final LoggedTunableNumber kTopIndexingVoltage =
+        new LoggedTunableNumber("Indexer Top Indexing Voltage", 3.0);
+    public static final LoggedTunableNumber kTuningVoltage =
+        new LoggedTunableNumber("Indexer Tuning Voltage", 1.0);
+    public static final DCMotor kSimGearbox = DCMotor.getKrakenX60(1);
+    public static final double kSimMOI = 1;
+    public static final double kSimGearing = 10;
+    public static final double kGearRatio = 0;
+    public static final boolean kFullTuningMode = false;
+  }
+
   public class ManipulatorRollerConstants {
     public static final double kGearing = 1.5;
     public static final DCMotor kRollerSimGearbox = DCMotor.getKrakenX60(1);
@@ -61,6 +77,9 @@ public class Constants {
     public static final int kManipulatorWrist = 30;
     public static final int kManipulatorAbsoluteEncoder = 1;
     public static final int kManipulatorRoller = 2;
+    public static final String kDriveCanivoreName = "Indexer";
+    public static final int kIndexerSideMotor = 3;
+    public static final int kIndexerTopMotor = 4;
   }
 
   public class ProtoConstants {
@@ -72,6 +91,8 @@ public class Constants {
     public static final double kManipulatorWristDefaultSupplyLimit = 80.0;
     public static final double kManipulatorRollerDefaultStatorLimit = 10.0;
     public static final double kManipulatorRollerDefaultSupplyLimit = 20.0;
+    public static final double kIndexerDefaultSupplyLimit = 20.0;
+    public static final double kIndexerDefaultStatorLimit = 10.0;
   }
 
   public static final boolean kTuningMode = true;

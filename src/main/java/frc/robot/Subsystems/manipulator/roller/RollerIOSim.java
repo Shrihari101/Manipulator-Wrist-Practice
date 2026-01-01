@@ -41,9 +41,7 @@ public class RollerIOSim implements RollerIO {
   }
 
   @Override
-  public void setCurrentLimits(double currentLimits) {
-    // TODO: Ask shorya what to put here
-  }
+  public void setCurrentLimits(double currentLimits) {}
 
   private double getAcceleration() {
     return Units.radiansToRotations(m_sim.getAngularAccelerationRadPerSecSq());
