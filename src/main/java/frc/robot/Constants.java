@@ -7,6 +7,40 @@ import frc.robot.util.LoggedTunableNumber;
 
 public class Constants {
 
+  public class ElevatorConstants {
+    public static final double kL1 = 9.5;
+    public static final double kL2 = 27.0;
+    public static final double kL3 = 43.25;
+    public static final double kL4 = 71.0;
+
+    public static final LoggedTunableNumber kP = new LoggedTunableNumber("ElevatorP", 0.0);
+    public static final LoggedTunableNumber kI = new LoggedTunableNumber("ElevatorI", 0.0);
+    public static final LoggedTunableNumber kD = new LoggedTunableNumber("ElevatorD", 0.0);
+    public static final LoggedTunableNumber kS = new LoggedTunableNumber("ElevatorkS", 0.0);
+
+    public static final LoggedTunableNumber kSimP = new LoggedTunableNumber("ElevatorSimP", 0.01);
+    public static final LoggedTunableNumber kSimI = new LoggedTunableNumber("ElevatorSimI", 0.0);
+    public static final LoggedTunableNumber kSimD = new LoggedTunableNumber("ElevatorSimD", 0.0);
+    public static final LoggedTunableNumber kSimkS = new LoggedTunableNumber("ElevatorSimkS", 0.0);
+    public static final double kHeightTolerance = 0.5;
+    public static final double kMinHeight = 0.0;
+    public static final double kMaxHeight = 73.5;
+    public static final double kElevatorDefaultSupplyLimit = 10;
+    public static final double kElevatorDefaultStatorLimit = 8;
+    public static final LoggedTunableNumber kElevatorSetpoint =
+        new LoggedTunableNumber("Tuning Elevator Setpoint", 0.0);
+    public static final LoggedTunableNumber kIntakingHeight =
+        new LoggedTunableNumber("Intaking Elevator Setpoint", 0.0);
+    public static final LoggedTunableNumber kStowHeight =
+        new LoggedTunableNumber("Stow Elevator Setpoint", 2.0);
+    public static final DCMotor kSimGearbox = DCMotor.getKrakenX60(1);
+    public static final double kRadius = 2;
+    public static final double kSimMOI = 0.001;
+    public static final double kGearRatio = 54.0 / 12.0;
+    public static final double kSimGearing = kGearRatio;
+    public static final double kSensorToMechanismRatio = (kGearRatio / (kRadius * Math.PI));
+  }
+
   public class IndexerConstants {
     public static final LoggedTunableNumber kStopVoltage =
         new LoggedTunableNumber("Indexer Stop Voltage", 0.0);
@@ -80,6 +114,8 @@ public class Constants {
     public static final String kDriveCanivoreName = "Indexer";
     public static final int kIndexerSideMotor = 3;
     public static final int kIndexerTopMotor = 4;
+    public static final int kElevatorLead = 5;
+    public static final int kElevatorFollowing = 6;
   }
 
   public class ProtoConstants {
