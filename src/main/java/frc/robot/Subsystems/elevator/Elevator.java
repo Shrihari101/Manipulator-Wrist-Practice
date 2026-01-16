@@ -118,4 +118,8 @@ public class Elevator extends SubsystemBase {
   public void scoringPeriodic() {
     m_io.setDesiredHeight(m_desiredHeight);
   }
+
+  public void setDesiredHeight(double desiredHeight) {
+    m_desiredHeight = desiredHeight;
+  }
 }

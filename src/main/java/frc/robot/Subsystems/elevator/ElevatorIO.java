@@ -28,11 +28,12 @@ public interface ElevatorIO {
 
   public void updateInputs(ElevatorInputs inputs);
 
-  public void setDesiredReefHeight(double inchesHeight);
+  public void setDesiredHeight(double inchesHeight);
 
   public void setPIDFF(int slot, double kP, double kI, double kD, double kG);
 
   public void setVoltage(double voltage);
 
   public void setCurrentLimits(double currentLimits);
+
 }
