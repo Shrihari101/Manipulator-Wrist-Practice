@@ -7,9 +7,9 @@ import frc.robot.Constants.Ports;
 import frc.robot.Constants.ReefHeight;
 import frc.robot.RobotState.RobotAction;
 import frc.robot.Subsystems.elevator.Elevator;
+import frc.robot.Subsystems.elevator.Elevator.ElevatorState;
 import frc.robot.Subsystems.elevator.ElevatorIOKraken;
 import frc.robot.Subsystems.elevator.ElevatorIOSim;
-import frc.robot.Subsystems.elevator.Elevator.ElevatorState;
 import frc.robot.Subsystems.indexer.Indexer;
 import frc.robot.Subsystems.indexer.IndexerIOKraken;
 import frc.robot.Subsystems.indexer.IndexerIOSim;
@@ -86,15 +86,13 @@ public class RobotContainer {
                   RobotState.getInstance().setDesiredReefHeight(ReefHeight.L1);
                 }));
 
-                
     m_driverControls
-    .scoring()
-    .onTrue(
-        Commands.runOnce(
-            () -> {
-              RobotState.getInstance().setDesiredReefHeight(ReefHeight.L1);
-            }));
-
+        .scoring()
+        .onTrue(
+            Commands.runOnce(
+                () -> {
+                  m_elevator.updateState(ElevatorState.kScoring);
+                }));
 
     m_driverControls
         .setLocationL2()

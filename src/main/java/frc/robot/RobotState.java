@@ -21,6 +21,7 @@ public class RobotState {
   public enum RobotAction {
     kIntaking,
     kDefault,
+    kScoring,
   }
 
   private static RobotState m_instance;
@@ -34,6 +35,7 @@ public class RobotState {
     Map<RobotAction, Runnable> periodicHash = new HashMap<>();
     periodicHash.put(RobotAction.kDefault, () -> {});
     periodicHash.put(RobotAction.kIntaking, this::intakingPeriodic);
+    periodicHash.put(RobotAction.kScoring, this::scoringPeriodic);
 
     m_profiles = new SubsystemProfiles<>(periodicHash, RobotAction.kDefault);
   }
@@ -65,6 +67,10 @@ public class RobotState {
     } else {
       m_indexer.updateState(IndexerState.kStop);
     }
+  }
+
+  public void scoringPeriodic() {
+    m_elevator.setDesiredReefHeight(m_desiredReefHeight);
   }
 
   public void setDesiredReefHeight(ReefHeight height) {

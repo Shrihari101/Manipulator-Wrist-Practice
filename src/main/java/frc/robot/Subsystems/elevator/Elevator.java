@@ -3,6 +3,7 @@ package frc.robot.Subsystems.elevator;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
+import frc.robot.Constants.ReefHeight;
 import frc.robot.util.LoggedTunableNumber;
 import frc.robot.util.SubsystemProfiles;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import org.littletonrobotics.junction.Logger;
 public class Elevator extends SubsystemBase {
   private ElevatorIO m_io;
   public final ElevatorInputsAutoLogged m_inputs;
+  private ReefHeight m_desiredReefHeight;
   private double m_desiredHeight;
 
   public static enum ElevatorState {
@@ -82,8 +84,7 @@ public class Elevator extends SubsystemBase {
     return m_profiles.getCurrentProfile();
   }
 
-  public void setDesiredReefHeight(double desiredHeight) {
-    m_desiredHeight = desiredHeight;
+  public void setDesiredReefHeight(double m_desiredReefHeight) {
     if (m_profiles.getCurrentProfile() == ElevatorState.kScoring) {
       m_io.setDesiredHeight(m_desiredHeight);
     }
@@ -93,8 +94,8 @@ public class Elevator extends SubsystemBase {
     return m_inputs.leadingPosition;
   }
 
-  public double getDesiredHeight() {
-    return m_desiredHeight;
+  public ReefHeight getDesiredReefHeight() {
+    return m_desiredReefHeight;
   }
 
   public boolean atSetpoint() {

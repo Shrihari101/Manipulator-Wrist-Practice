@@ -48,6 +48,6 @@ public class DriverControlsPS5 implements DriverControls {
 
   @Override
   public Trigger scoring() {
-   return m_controller.L2();
+    return m_controller.L2();
   }
 }

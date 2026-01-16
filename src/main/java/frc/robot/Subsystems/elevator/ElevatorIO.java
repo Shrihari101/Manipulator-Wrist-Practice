@@ -28,7 +28,7 @@ public interface ElevatorIO {
 
   public void updateInputs(ElevatorInputs inputs);
 
-  public void setDesiredHeight(double inchesHeight);
+  public void setDesiredReefHeight(double inchesHeight);
 
   public void setPIDFF(int slot, double kP, double kI, double kD, double kG);
 
