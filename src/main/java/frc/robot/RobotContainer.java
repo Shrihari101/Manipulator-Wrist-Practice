@@ -20,15 +20,19 @@ import frc.robot.Subsystems.manipulator.roller.RollerIOKraken;
 import frc.robot.Subsystems.manipulator.roller.RollerIOSim;
 import frc.robot.Subsystems.manipulator.wrist.WristIOKraken;
 import frc.robot.Subsystems.manipulator.wrist.WristIOSim;
+import frc.robot.oi.DriverControls;
+import frc.robot.oi.DriverControlsPS5;
 
 public class RobotContainer {
   private Manipulator m_manipulator;
   private Indexer m_indexer;
   private Elevator m_elevator;
+  private DriverControls m_driverControls;
   private CommandPS5Controller m_controller;
 
   public RobotContainer() {
     configureSubsystems();
+    configureCommands();
     configureControllers();
     configureButtonBindings();
   }
@@ -50,12 +54,63 @@ public class RobotContainer {
     }
   }
 
+  private void configureCommands() {
+    RobotState.startInstance(m_indexer, m_manipulator, m_elevator);
+  }
+
   private void configureControllers() {
+    m_driverControls = new DriverControlsPS5(0);
     m_controller = new CommandPS5Controller(0);
   }
 
   private void configureButtonBindings() {
 
+    // m_driverControls
+    //     .coralIntake()
+    //     .onTrue(
+    //         Commands.runOnce(
+    //                 () -> {
+    //                   RobotState.getInstance().updateRobotAction(RobotAction.kIntaking);
+    //                 })
+    //             .andThen(Commands.idle())
+    //             .onlyWhile(
+    //                 () -> RobotState.getInstance().getCurrentAction() == RobotAction.kIntaking)
+    //             .handleInterrupt(
+    //                 () -> {
+    //                   RobotState.getInstance().setDefaultAction();
+    //                 }));
+
+    // m_driverControls
+    //     .setLocationL1()
+    //     .onTrue(
+    //         Commands.runOnce(
+    //             () -> {
+    //               RobotState.getInstance().setDesiredReefHeight(ReefHeight.L1);
+    //             }));
+
+    // m_driverControls
+    //     .setLocationL1()
+    //     .onTrue(
+    //         Commands.runOnce(
+    //             () -> {
+    //               RobotState.getInstance().setDesiredReefHeight(ReefHeight.L2);
+    //             }));
+
+    // m_driverControls
+    //     .setLocationL1()
+    //     .onTrue(
+    //         Commands.runOnce(
+    //             () -> {
+    //               RobotState.getInstance().setDesiredReefHeight(ReefHeight.L3);
+    //             }));
+
+    // m_driverControls
+    //     .setLocationL1()
+    //     .onTrue(
+    //         Commands.runOnce(
+    //             () -> {
+    //               RobotState.getInstance().setDesiredReefHeight(ReefHeight.L4);
+    //             }));
     m_controller
         .R2()
         .onTrue(
@@ -96,7 +151,7 @@ public class RobotContainer {
         .onTrue(
             Commands.runOnce(
                 () -> {
-                  m_elevator.updateState(ElevatorState.kTuning);
+                  m_elevator.updateState(ElevatorState.kSlamming);
                 }));
     m_controller
         .povUp()

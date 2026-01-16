@@ -18,7 +18,7 @@ public class Elevator extends SubsystemBase {
     kStow,
     kIntaking,
     kScoring,
-    kTuning,
+    kSlamming,
   }
 
   private SubsystemProfiles<ElevatorState> m_profiles;
@@ -31,7 +31,7 @@ public class Elevator extends SubsystemBase {
     periodicHash.put(ElevatorState.kStow, this::stowPeriodic);
     periodicHash.put(ElevatorState.kScoring, this::scoringPeriodic);
     periodicHash.put(ElevatorState.kIntaking, this::intakingPeriodic);
-    periodicHash.put(ElevatorState.kTuning, this::tuningPeriodic);
+    periodicHash.put(ElevatorState.kSlamming, this::slammingPeriodic);
 
     m_profiles = new SubsystemProfiles<>(periodicHash, ElevatorState.kStow);
   }
@@ -102,8 +102,8 @@ public class Elevator extends SubsystemBase {
         <= ElevatorConstants.kHeightTolerance;
   }
 
-  public void tuningPeriodic() {
-    m_io.setDesiredHeight(ElevatorConstants.kElevatorSetpoint.get());
+  public void slammingPeriodic() {
+    m_io.setDesiredHeight(ElevatorConstants.kSlammingHeight.get());
   }
 
   public void intakingPeriodic() {
