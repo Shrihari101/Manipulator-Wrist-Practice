@@ -83,6 +83,14 @@ public class Constants {
   }
 
   public class ManipulatorRollerConstants {
+    public static final LoggedTunableNumber kRollerL1ScoringVoltageManual =
+        new LoggedTunableNumber("Manipulator Roller L1 Scoring Voltage Manual", 2.25);
+
+    public static final LoggedTunableNumber kRollerL2L3ScoringVoltage =
+        new LoggedTunableNumber("Manipulator Roller L2 L3 Scoring Voltage", 3.0);
+    public static final LoggedTunableNumber kRollerL4ScoringVoltage =
+        new LoggedTunableNumber("Manipulator Roller L4 Scoring Voltage", 3.0);
+
     public static final double kGearing = 1.5;
     public static final DCMotor kRollerSimGearbox = DCMotor.getKrakenX60(1);
     public static final double kRollerSimMOI = 1;

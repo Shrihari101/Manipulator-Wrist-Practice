@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ManipulatorRollerConstants;
 import frc.robot.Constants.ManipulatorWristConstants;
+import frc.robot.Constants.ReefHeight;
+import frc.robot.RobotState;
 import frc.robot.Subsystems.manipulator.roller.RollerIO;
 import frc.robot.Subsystems.manipulator.roller.RollerInputsAutoLogged;
 import frc.robot.Subsystems.manipulator.wrist.WristIO;
@@ -19,6 +21,7 @@ public class Manipulator extends SubsystemBase {
   private WristIO m_wristIO;
   private RollerIO m_rollerIO;
   private Rotation2d m_desiredAngle = new Rotation2d();
+  private boolean m_runRollerScoring = false;
 
   public final WristInputsAutoLogged m_wristInputs = new WristInputsAutoLogged();
   public final RollerInputsAutoLogged m_rollerInputs = new RollerInputsAutoLogged();
@@ -29,6 +32,7 @@ public class Manipulator extends SubsystemBase {
     kStow,
     kIntaking,
     kTuning,
+    kScoring,
   }
 
   public Manipulator(RollerIO rollerIO, WristIO wristIO) {
@@ -80,6 +84,7 @@ public class Manipulator extends SubsystemBase {
     Logger.recordOutput("Manipulator/State", m_profiles.getCurrentProfile());
     Logger.processInputs("Manipulator/Wrist Inputs", m_wristInputs);
     Logger.processInputs("Manipulator/RollerInputs", m_rollerInputs);
+    Logger.recordOutput("Manipulator/RunRollerScoring", m_runRollerScoring);
   }
 
   public void intakingPeriodic() {
@@ -90,6 +95,22 @@ public class Manipulator extends SubsystemBase {
   public void stowPeriodic() {
     m_wristIO.setDesiredAngle(ManipulatorWristConstants.kStowAngle);
     m_rollerIO.setVoltage(ManipulatorRollerConstants.kRollerStowVoltage.get());
+  }
+
+  public void scoringPeriodic() {
+    m_wristIO.setDesiredAngle(m_desiredAngle);
+    if (m_runRollerScoring) {
+      if (RobotState.getInstance().getDesiredReefHeight() == ReefHeight.L1) {
+        m_rollerIO.setVoltage(ManipulatorRollerConstants.kRollerL1ScoringVoltageManual.get());
+      }
+    } else if (RobotState.getInstance().getDesiredReefHeight() == ReefHeight.L4) {
+      m_rollerIO.setVoltage(ManipulatorRollerConstants.kRollerL4ScoringVoltage.get());
+    } else if (RobotState.getInstance().getDesiredReefHeight() == ReefHeight.L3
+        || RobotState.getInstance().getDesiredReefHeight() == ReefHeight.L2) {
+      m_rollerIO.setVoltage(ManipulatorRollerConstants.kRollerL2L3ScoringVoltage.get());
+    } else {
+      m_rollerIO.setVoltage(0.0);
+    }
   }
 
   public void tuningPeriodic() {
@@ -103,6 +124,8 @@ public class Manipulator extends SubsystemBase {
       return;
     }
     m_profiles.setCurrentProfile(state);
+
+    m_runRollerScoring = false;
   }
 
   public ManipulatorState getCurrentState() {
@@ -120,5 +143,13 @@ public class Manipulator extends SubsystemBase {
   public boolean atSetpoint() {
     return Math.abs(m_wristInputs.desiredAngleDeg - getCurrentAngle().getDegrees())
         < ManipulatorWristConstants.kWristTolerance;
+  }
+
+  public void runRollerScoring() {
+    m_runRollerScoring = true;
+  }
+
+  public void stopRollerScoring() {
+    m_runRollerScoring = false;
   }
 }
