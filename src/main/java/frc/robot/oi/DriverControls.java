@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 public interface DriverControls {
   public Trigger coralIntake();
 
+  public Trigger scoring();
+
   public Trigger coralOuttake();
 
   public Trigger setLocationL1();

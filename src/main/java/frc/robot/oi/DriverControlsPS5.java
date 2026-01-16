@@ -45,4 +45,9 @@ public class DriverControlsPS5 implements DriverControls {
   public Trigger zeroElevator() {
     return m_controller.cross();
   }
+
+  @Override
+  public Trigger scoring() {
+   return m_controller.L2();
+  }
 }

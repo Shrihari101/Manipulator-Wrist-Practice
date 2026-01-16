@@ -45,4 +45,9 @@ public class DriverControlsXbox implements DriverControls {
   public Trigger zeroElevator() {
     return m_controller.a();
   }
+
+  @Override
+  public Trigger scoring() {
+    return m_controller.leftTrigger();
+  }
 }

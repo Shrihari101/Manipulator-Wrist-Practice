@@ -82,7 +82,7 @@ public class Elevator extends SubsystemBase {
     return m_profiles.getCurrentProfile();
   }
 
-  public void setDesiredHeight(double desiredHeight) {
+  public void setDesiredReefHeight(double desiredHeight) {
     m_desiredHeight = desiredHeight;
     if (m_profiles.getCurrentProfile() == ElevatorState.kScoring) {
       m_io.setDesiredHeight(m_desiredHeight);
