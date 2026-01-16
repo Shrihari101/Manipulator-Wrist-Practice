@@ -50,7 +50,6 @@ public class RobotState {
     return m_instance;
   }
 
-  
   public static RobotState getInstance() {
     return m_instance;
   }
@@ -97,20 +96,30 @@ public class RobotState {
     ElevatorState newElevatorState = ElevatorState.kStow;
     ManipulatorState newManipulatorState = ManipulatorState.kStow;
 
-    newElevatorState = ElevatorState.kIntaking;
-    newManipulatorState = ManipulatorState.kIntaking;
+    switch(newAction) {
+      case kDefault:
+      break;
 
+      case kIntaking:
+      newElevatorState = ElevatorState.kIntaking;
+      newManipulatorState = ManipulatorState.kIntaking;
+      
+      case kScoring:
+      newIndexerState = m_indexer.getCurrentState();
+      newElevatorState = m_elevator.getCurrentState();
+      newManipulatorState = m_manipulator.getCurrentState();
+    }
     m_profiles.setCurrentProfile(newAction);
 
     if (m_indexer.getCurrentState() == newIndexerState) {
       m_indexer.updateState(newIndexerState);
     }
 
-    if (m_elevator.getCurrentState() != ElevatorState.kIntaking) {
+    if (m_elevator.getCurrentState() != newElevatorState) {
       m_elevator.updateState(newElevatorState);
     }
 
-    if (m_manipulator.getCurrentState() != ManipulatorState.kIntaking) {
+    if (m_manipulator.getCurrentState() != newManipulatorState) {
       m_manipulator.updateState(newManipulatorState);
     }
   }

@@ -35,5 +35,4 @@ public interface ElevatorIO {
   public void setVoltage(double voltage);
 
   public void setCurrentLimits(double currentLimits);
-
 }
