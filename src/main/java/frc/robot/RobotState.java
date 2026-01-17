@@ -1,7 +1,6 @@
 package frc.robot;
 
 import frc.robot.Constants.ElevatorConstants;
-import frc.robot.Constants.ReefHeight;
 import frc.robot.Subsystems.elevator.Elevator;
 import frc.robot.Subsystems.elevator.Elevator.ElevatorState;
 import frc.robot.Subsystems.indexer.Indexer;
@@ -18,7 +17,6 @@ public class RobotState {
   private Manipulator m_manipulator;
   private Elevator m_elevator;
   private double m_desiredHeight;
-  private ReefHeight m_desiredReefHeight = ReefHeight.L1;
 
   public enum RobotAction {
     kIntaking,
@@ -86,12 +84,8 @@ public class RobotState {
     m_desiredHeight = desiredHeight;
   }
 
-  public void setDesiredReefHeight(ReefHeight height) {
-    m_desiredReefHeight = height;
-  }
-
-  public ReefHeight getDesiredReefHeight() {
-    return m_desiredReefHeight;
+  public double getDesiredHeight() {
+    return m_desiredHeight;
   }
 
   public void setDefaultAction() {

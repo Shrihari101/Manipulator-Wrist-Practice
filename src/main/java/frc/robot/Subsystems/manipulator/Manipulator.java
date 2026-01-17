@@ -3,9 +3,9 @@ package frc.robot.Subsystems.manipulator;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.ManipulatorRollerConstants;
 import frc.robot.Constants.ManipulatorWristConstants;
-import frc.robot.Constants.ReefHeight;
 import frc.robot.RobotState;
 import frc.robot.Subsystems.manipulator.roller.RollerIO;
 import frc.robot.Subsystems.manipulator.roller.RollerInputsAutoLogged;
@@ -107,13 +107,13 @@ public class Manipulator extends SubsystemBase {
   public void scoringPeriodic() {
     m_wristIO.setDesiredAngle(m_desiredAngle);
     if (m_runRollerScoring) {
-      if (RobotState.getInstance().getDesiredReefHeight() == ReefHeight.L1) {
+      if (RobotState.getInstance().getDesiredHeight() == ElevatorConstants.kL1) {
         m_rollerIO.setVoltage(ManipulatorRollerConstants.kRollerL1ScoringVoltageManual.get());
       }
-    } else if (RobotState.getInstance().getDesiredReefHeight() == ReefHeight.L4) {
+    } else if (RobotState.getInstance().getDesiredHeight() == ElevatorConstants.kL4) {
       m_rollerIO.setVoltage(ManipulatorRollerConstants.kRollerL4ScoringVoltage.get());
-    } else if (RobotState.getInstance().getDesiredReefHeight() == ReefHeight.L3
-        || RobotState.getInstance().getDesiredReefHeight() == ReefHeight.L2) {
+    } else if (RobotState.getInstance().getDesiredHeight() == ElevatorConstants.kL3
+        || RobotState.getInstance().getDesiredHeight() == ElevatorConstants.kL2) {
       m_rollerIO.setVoltage(ManipulatorRollerConstants.kRollerL2L3ScoringVoltage.get());
     } else {
       m_rollerIO.setVoltage(0.0);

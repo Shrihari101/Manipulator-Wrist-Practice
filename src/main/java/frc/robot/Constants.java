@@ -4,33 +4,8 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.util.Units;
 import frc.robot.util.LoggedTunableNumber;
-import java.util.Arrays;
 
 public class Constants {
-
-  public enum ReefHeight {
-    L1(0, Units.inchesToMeters(25.0), 0),
-    L2(1, Units.inchesToMeters(31.875 - Math.cos(Math.toRadians(35.0)) * 0.625), -35),
-    L3(2, Units.inchesToMeters(47.625 - Math.cos(Math.toRadians(35.0)) * 0.625), -35),
-    L4(3, Units.inchesToMeters(72), -90);
-
-    ReefHeight(int levelNumber, double height, double pitch) {
-      this.levelNumber = levelNumber;
-      this.height = height;
-      this.pitch = pitch;
-    }
-
-    public static ReefHeight fromLevel(int level) {
-      return Arrays.stream(values())
-          .filter(height -> height.ordinal() == level)
-          .findFirst()
-          .orElse(L4);
-    }
-
-    public final int levelNumber;
-    public final double height;
-    public final double pitch;
-  }
 
   public class ElevatorConstants {
     public static final double kL1 = 9.5;
