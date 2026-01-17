@@ -3,11 +3,10 @@ package frc.robot;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.Ports;
-import frc.robot.Constants.ReefHeight;
 import frc.robot.RobotState.RobotAction;
 import frc.robot.Subsystems.elevator.Elevator;
-import frc.robot.Subsystems.elevator.Elevator.ElevatorState;
 import frc.robot.Subsystems.elevator.ElevatorIOKraken;
 import frc.robot.Subsystems.elevator.ElevatorIOSim;
 import frc.robot.Subsystems.indexer.Indexer;
@@ -26,7 +25,6 @@ public class RobotContainer {
   private Indexer m_indexer;
   private Elevator m_elevator;
   private DriverControls m_driverControls;
-  // private CommandPS5Controller m_controller;
 
   public RobotContainer() {
     configureSubsystems();
@@ -58,40 +56,16 @@ public class RobotContainer {
 
   private void configureControllers() {
     m_driverControls = new DriverControlsPS5(0);
-    // m_controller = new CommandPS5Controller(0);
   }
 
   private void configureButtonBindings() {
-
-    m_driverControls
-        .coralIntake()
-        .onTrue(
-            Commands.runOnce(
-                    () -> {
-                      RobotState.getInstance().updateRobotAction(RobotAction.kIntaking);
-                    })
-                .andThen(Commands.idle())
-                .onlyWhile(
-                    () -> RobotState.getInstance().getCurrentAction() == RobotAction.kIntaking)
-                .handleInterrupt(
-                    () -> {
-                      RobotState.getInstance().setDefaultAction();
-                    }));
 
     m_driverControls
         .setLocationL1()
         .onTrue(
             Commands.runOnce(
                 () -> {
-                  RobotState.getInstance().setDesiredReefHeight(ReefHeight.L1);
-                }));
-
-    m_driverControls
-        .scoring()
-        .onTrue(
-            Commands.runOnce(
-                () -> {
-                  m_elevator.updateState(ElevatorState.kScoring);
+                  RobotState.getInstance().setDesiredHeight(ElevatorConstants.kL1);
                 }));
 
     m_driverControls
@@ -99,7 +73,7 @@ public class RobotContainer {
         .onTrue(
             Commands.runOnce(
                 () -> {
-                  RobotState.getInstance().setDesiredReefHeight(ReefHeight.L2);
+                  RobotState.getInstance().setDesiredHeight(ElevatorConstants.kL2);
                 }));
 
     m_driverControls
@@ -107,7 +81,7 @@ public class RobotContainer {
         .onTrue(
             Commands.runOnce(
                 () -> {
-                  RobotState.getInstance().setDesiredReefHeight(ReefHeight.L3);
+                  RobotState.getInstance().setDesiredHeight(ElevatorConstants.kL3);
                 }));
 
     m_driverControls
@@ -115,102 +89,31 @@ public class RobotContainer {
         .onTrue(
             Commands.runOnce(
                 () -> {
-                  m_elevator.updateState(ElevatorState.kScoring);
+                  RobotState.getInstance().setDesiredHeight(ElevatorConstants.kL4);
                 }));
-    // m_controller
-    //     .R2()
-    //     .onTrue(
-    //         Commands.runOnce(
-    //             () -> {
-    //               m_manipulator.updateState(ManipulatorState.kStow);
-    //             }));
-    // m_controller
-    //     .R1()
-    //     .onTrue(
-    //         Commands.runOnce(
-    //             () -> {
-    //               m_manipulator.updateState(ManipulatorState.kIntaking);
-    //             }));
-    // m_controller
-    //     .L1()
-    //     .onTrue(
-    //         Commands.runOnce(
-    //             () -> {
-    //               m_indexer.updateState(IndexerState.kStop);
-    //             }));
-    // m_controller
-    //     .L2()
-    //     .onTrue(
-    //         Commands.runOnce(
-    //             () -> {
-    //               m_indexer.updateState(IndexerState.kIndexing);
-    //             }));
-    // m_controller
-    //     .povDown()
-    //     .onTrue(
-    //         Commands.runOnce(
-    //             () -> {
-    //               m_elevator.updateState(ElevatorState.kStow);
-    //             }));
-    // m_controller
-    //     .povLeft()
-    //     .onTrue(
-    //         Commands.runOnce(
-    //             () -> {
-    //               m_elevator.updateState(ElevatorState.kSlamming);
-    //             }));
-    // m_controller
-    //     .povUp()
-    //     .onTrue(
-    //         Commands.runOnce(
-    //             () -> {
-    //               if (m_elevator.getCurrentState() == ElevatorState.kScoring) {
-    //                 m_elevator.setDesiredHeight(0);
-    //                 m_elevator.updateState(ElevatorState.kIntaking);
-    //               } else {
-    //                 m_elevator.updateState(ElevatorState.kScoring);
-    //               }
-    //             }));
-    // m_controller
-    //     .povRight()
-    //     .onTrue(
-    //         Commands.runOnce(
-    //             () -> {
-    //               if (m_elevator.getCurrentState() == ElevatorState.kScoring) {
-    //                 m_elevator.setDesiredHeight(0);
-    //                 m_elevator.updateState(ElevatorState.kStow);
-    //               } else {
-    //                 m_elevator.updateState(ElevatorState.kScoring);
-    //               }
-    //             }));
-    // m_controller
-    //     .cross()
-    //     .onTrue(
-    //         Commands.runOnce(
-    //             () -> {
-    //               m_elevator.setDesiredHeight(ElevatorConstants.kL1);
-    //             }));
-    // m_controller
-    //     .circle()
-    //     .onTrue(
-    //         Commands.runOnce(
-    //             () -> {
-    //               m_elevator.setDesiredHeight(ElevatorConstants.kL2);
-    //             }));
-    // m_controller
-    //     .triangle()
-    //     .onTrue(
-    //         Commands.runOnce(
-    //             () -> {
-    //               m_elevator.setDesiredHeight(ElevatorConstants.kL3);
-    //             }));
-    // m_controller
-    //     .square()
-    //     .onTrue(
-    //         Commands.runOnce(
-    //             () -> {
-    //               m_elevator.setDesiredHeight(ElevatorConstants.kL4);
-    //             }));
+
+    m_driverControls
+        .coralOuttake()
+        .onTrue(
+            Commands.runOnce(
+                () -> {
+                  RobotState.getInstance().updateRobotAction(RobotAction.kOuttaking);
+                }));
+
+    m_driverControls
+        .scoring()
+        .onTrue(
+            Commands.runOnce(
+                () -> {
+                  RobotState.getInstance().updateRobotAction(RobotAction.kScoring);
+                }));
+    m_driverControls
+        .coralIntake()
+        .onTrue(
+            Commands.runOnce(
+                () -> {
+                  RobotState.getInstance().updateRobotAction(RobotAction.kIntaking);
+                }));
   }
 
   public Command getAutonomousCommand() {

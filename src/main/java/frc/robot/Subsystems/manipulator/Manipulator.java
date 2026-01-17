@@ -33,6 +33,7 @@ public class Manipulator extends SubsystemBase {
     kIntaking,
     kTuning,
     kScoring,
+    kIdle,
   }
 
   public Manipulator(RollerIO rollerIO, WristIO wristIO) {
@@ -42,6 +43,7 @@ public class Manipulator extends SubsystemBase {
     periodicHash.put(ManipulatorState.kStow, this::stowPeriodic);
     periodicHash.put(ManipulatorState.kTuning, this::tuningPeriodic);
     periodicHash.put(ManipulatorState.kIntaking, this::intakingPeriodic);
+    periodicHash.put(ManipulatorState.kIdle, this::idlePeriodic);
 
     m_profiles = new SubsystemProfiles<>(periodicHash, ManipulatorState.kStow);
   }
@@ -95,6 +97,11 @@ public class Manipulator extends SubsystemBase {
   public void stowPeriodic() {
     m_wristIO.setDesiredAngle(ManipulatorWristConstants.kStowAngle);
     m_rollerIO.setVoltage(ManipulatorRollerConstants.kRollerStowVoltage.get());
+  }
+
+  public void idlePeriodic() {
+    m_wristIO.setDesiredAngle(ManipulatorWristConstants.kStowAngle);
+    m_rollerIO.setVoltage(0.0);
   }
 
   public void scoringPeriodic() {

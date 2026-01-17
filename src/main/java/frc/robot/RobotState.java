@@ -24,6 +24,7 @@ public class RobotState {
     kIntaking,
     kDefault,
     kScoring,
+    kOuttaking,
   }
 
   private static RobotState m_instance;
@@ -38,6 +39,7 @@ public class RobotState {
     periodicHash.put(RobotAction.kDefault, () -> {});
     periodicHash.put(RobotAction.kIntaking, this::intakingPeriodic);
     periodicHash.put(RobotAction.kScoring, this::scoringPeriodic);
+    periodicHash.put(RobotAction.kOuttaking, this::outtakingPeriodic);
 
     m_profiles = new SubsystemProfiles<>(periodicHash, RobotAction.kDefault);
   }
@@ -73,6 +75,11 @@ public class RobotState {
 
   public void scoringPeriodic() {
     m_elevator.setDesiredHeight(ElevatorConstants.kL4);
+    Logger.recordOutput("ehbderudhs", true);
+  }
+
+  public void outtakingPeriodic() {
+    m_manipulator.runRollerScoring();
   }
 
   public void setDesiredHeight(double desiredHeight) {
@@ -102,16 +109,22 @@ public class RobotState {
 
       case kIntaking:
         newElevatorState = ElevatorState.kIntaking;
-        newManipulatorState = ManipulatorState.kIntaking;
+        newIndexerState = IndexerState.kStop;
+        newManipulatorState = ManipulatorState.kIdle;
         break;
 
       case kScoring:
-        newIndexerState = m_indexer.getCurrentState();
-        newElevatorState = m_elevator.getCurrentState();
-        newManipulatorState = m_manipulator.getCurrentState();
-
-        m_manipulator.runRollerScoring();
+        newIndexerState = IndexerState.kStop;
+        newElevatorState = ElevatorState.kScoring;
+        m_manipulator.stopRollerScoring();
+        newManipulatorState = ManipulatorState.kScoring;
         break;
+
+      case kOuttaking:
+        newElevatorState = ElevatorState.kScoring;
+        m_manipulator.runRollerScoring();
+        newManipulatorState = ManipulatorState.kIdle;
+        newIndexerState = IndexerState.kStop;
     }
 
     m_profiles.setCurrentProfile(newAction);
