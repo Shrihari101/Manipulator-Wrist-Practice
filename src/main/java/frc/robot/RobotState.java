@@ -82,6 +82,7 @@ public class RobotState {
 
   public void setDesiredHeight(double desiredHeight) {
     m_desiredHeight = desiredHeight;
+    m_elevator.setDesiredHeight(m_desiredHeight);
   }
 
   public double getDesiredHeight() {
@@ -103,8 +104,8 @@ public class RobotState {
 
       case kIntaking:
         newElevatorState = ElevatorState.kIntaking;
-        newIndexerState = IndexerState.kStop;
-        newManipulatorState = ManipulatorState.kIdle;
+        newIndexerState = IndexerState.kIndexing;
+        newManipulatorState = ManipulatorState.kIntaking;
         break;
 
       case kScoring:

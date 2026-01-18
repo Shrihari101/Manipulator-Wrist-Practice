@@ -18,7 +18,7 @@ import frc.robot.Subsystems.manipulator.roller.RollerIOSim;
 import frc.robot.Subsystems.manipulator.wrist.WristIOKraken;
 import frc.robot.Subsystems.manipulator.wrist.WristIOSim;
 import frc.robot.oi.DriverControls;
-import frc.robot.oi.DriverControlsPS5;
+import frc.robot.oi.DriverControlsXbox;
 
 public class RobotContainer {
   private Manipulator m_manipulator;
@@ -55,7 +55,8 @@ public class RobotContainer {
   }
 
   private void configureControllers() {
-    m_driverControls = new DriverControlsPS5(0);
+    // m_driverControls = new DriverControlsPS5(0);
+    m_driverControls = new DriverControlsXbox(0);
   }
 
   private void configureButtonBindings() {
@@ -65,7 +66,7 @@ public class RobotContainer {
         .onTrue(
             Commands.runOnce(
                 () -> {
-                  RobotState.getInstance().setDesiredHeight(ElevatorConstants.kL1);
+                  m_elevator.setDesiredHeight(ElevatorConstants.kL1);
                 }));
 
     m_driverControls
@@ -73,7 +74,7 @@ public class RobotContainer {
         .onTrue(
             Commands.runOnce(
                 () -> {
-                  RobotState.getInstance().setDesiredHeight(ElevatorConstants.kL2);
+                  m_elevator.setDesiredHeight(ElevatorConstants.kL2);
                 }));
 
     m_driverControls
@@ -81,7 +82,7 @@ public class RobotContainer {
         .onTrue(
             Commands.runOnce(
                 () -> {
-                  RobotState.getInstance().setDesiredHeight(ElevatorConstants.kL3);
+                  m_elevator.setDesiredHeight(ElevatorConstants.kL3);
                 }));
 
     m_driverControls
@@ -89,7 +90,7 @@ public class RobotContainer {
         .onTrue(
             Commands.runOnce(
                 () -> {
-                  RobotState.getInstance().setDesiredHeight(ElevatorConstants.kL4);
+                  m_elevator.setDesiredHeight(ElevatorConstants.kL4);
                 }));
 
     m_driverControls

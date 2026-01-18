@@ -41,6 +41,7 @@ public class Manipulator extends SubsystemBase {
     m_rollerIO = rollerIO;
     Map<ManipulatorState, Runnable> periodicHash = new HashMap<>();
     periodicHash.put(ManipulatorState.kStow, this::stowPeriodic);
+    periodicHash.put(ManipulatorState.kScoring, this::scoringPeriodic);
     periodicHash.put(ManipulatorState.kTuning, this::tuningPeriodic);
     periodicHash.put(ManipulatorState.kIntaking, this::intakingPeriodic);
     periodicHash.put(ManipulatorState.kIdle, this::idlePeriodic);
@@ -154,9 +155,11 @@ public class Manipulator extends SubsystemBase {
 
   public void runRollerScoring() {
     m_runRollerScoring = true;
+    m_rollerIO.setVoltage(-4.0);
   }
 
   public void stopRollerScoring() {
     m_runRollerScoring = false;
+    m_rollerIO.setVoltage(0.0);
   }
 }
